@@ -1,5 +1,5 @@
 # Willkommen zum Assembler-Python
-Dieses Repo beschäftigt sich mit einer ausgedachten / vereinfachten Assmblersprache. Um eine einfacheren Bezug zu der Sprache zuentwickeln, habe ich mich (Jonas Napierski) hingesetzte und schnell in Python einen kleinen Interpreten zu schreiben.
+Dieses Repo beschäftigt sich mit einer ausgedachten / vereinfachten Assmblersprache. Um eine einfacheren Bezug zu der Sprache zuentwickeln, habe ich mich (Jonas Napierski) hingesetzte und schnell in Python einen kleinen Interpreten zu schreiben. [English Version](https://github.com/zirkumflexlab/Assembler-Python/blob/master/ENG_README.md)
 
 # Befehle
 
