@@ -1,42 +1,36 @@
 import sys 
 from rich.console import Console
 
-con = Console()
 
-ARGS = sys.argv[1:]
-
-dataset = {}
-lines = []
-
-def JMP(line):
+def JMP(line, dataset):
     return int(line[1])
 
-def TST(line):
+def TST(line, dataset):
     if 0 >= dataset[line[1]]:
         return 2
     else:
         return 1
 
-def HLT(line):
+def HLT(line, dataset):
     return None
 
-def CRT(line):
+def CRT(line, dataset):
     dataset[line[1]] = 0
     return 1
 
-def DEC(line):
+def DEC(line, dataset):
     tmp = dataset.get(line[1])
     dataset[line[1]] = tmp -1 
     return 1
 
 
-def INC(line):
+def INC(line, dataset):
     tmp = dataset.get(line[1])
     dataset[line[1]] = tmp +1 
     return 1
 
-def PRT(line):
-    con.print(f"[bold cyan]{line[1]}[/bold cyan]: [green]{dataset.get(line[1])}[/green]")
+def PRT(line, dataset):
+    Console().print(f"[bold cyan]{line[1]}[/bold cyan]: [green]{dataset.get(line[1])}[/green]")
     return 1
 
 
@@ -50,27 +44,31 @@ commands = {
     "TST": TST
 }
 
-def loadFile():
-    file = open(ARGS[0], "r")
-    tmpLines = file.readlines()
+def loadFile(filepath):
+    with open(filepath, "r") as file:
+        return [line.replace("\n", "").split(" ") for line in file.readlines()]
 
-    for line in tmpLines:
-        line = line.replace("\n", "")
-        lines.append(line.split(" "))
 
-loadFile()
-i = 0
-while i < len(lines):
-    line = lines[i]
+def main():  
+    ARGS = sys.argv[1:]
 
-    if commands.__contains__(line[0]):
-        cmd = commands.get(line[0])
-        next_line = cmd(line)
-        
-        if next_line == None:
-            break
-        if line[0] == "JMP":
-            i = next_line
-        else:
-            i = i+next_line
-        #con.print("Something went wrong.", style="bold red")
+    dataset = {}
+    lines = loadFile(ARGS[0])
+    
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+
+        if commands.__contains__(line[0]):
+            cmd = commands.get(line[0])
+            next_line = cmd(line, dataset)
+            
+            if next_line == None:
+                break
+            if line[0] == "JMP":
+                i = next_line
+            else:
+                i = i+next_line
+
+if __name__ == "__main__":
+    main()
