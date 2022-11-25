@@ -80,7 +80,7 @@ def PRT(line: list, dataset: dict) -> int:
     :rtype: int
     :return: 1
     """
-    Console().print(f"[bold cyan]{line[1]}[/bold cyan]: [green]{dataset.get(line[1])}[/green]")
+    Console().print(f"[bright_black]PRINT:[/bright_black] [bold blue_violet]{line[1]}[/bold blue_violet]: [bright_yellow]{dataset.get(line[1])}[/bright_yellow]")
     return 1
 
 def loadFile(filepath: str) -> list:
@@ -98,6 +98,12 @@ def main():
     """ Main function called by using 'python Assembler-Python [file]'
     """
     ARGS = sys.argv[1:]
+    loglevel = 0
+    if ARGS.__contains__("--loglevel"):
+        for i in range(len(ARGS)):
+            if ARGS[i] == "--loglevel" and (i+1) <len(ARGS):
+                loglevel = int(ARGS[i+1])
+    
     commands = {
         "INC": INC,
         "PRT": PRT,
@@ -118,6 +124,8 @@ def main():
             cmd = commands.get(line[0])
             next_line = cmd(line, dataset)
             
+            if loglevel > 0:
+                Console().print(f"[bright_black]{'%03d' % i}| {line[1]}[/bright_black]: [bright_yellow]{dataset.get(line[1])}[/bright_yellow]")
             if next_line == None:
                 break
             if line[0] == "JMP":
