@@ -90,7 +90,6 @@ def loadFile(filepath: str) -> list:
     :return: [[line_0[0],line_0[1]],...]
     :rtype: list
     """
-    
     with open(filepath, "r") as file:
         return [line.replace("\n", "").split(" ") for line in file.readlines()]
 
